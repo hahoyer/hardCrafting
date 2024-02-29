@@ -1,7 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.11
-Date: ????
+Date: 2024-02-29
   Changes:
+    - hardcrafting-smaller-ore-stacks-setting improved: Change stacksize of all actual ores and also related material
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.10
 Date: 2023-12-09
