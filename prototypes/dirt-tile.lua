@@ -9,7 +9,7 @@ data:extend({
 		needs_correction = false,
 		minable = {hardness = 0.2, mining_time = 0.1, result = "dirt"},
 		mined_sound = { filename = "__base__/sound/walking/dirt-02.ogg" },
-		collision_mask = {"ground-tile"},
+		collision_mask = {layers = {ground_tile = true}},
 		walking_speed_modifier = dirt_walking_speed_modifier,
 		layer = 59,
 		decorative_removal_probability = 0.6,
@@ -39,32 +39,11 @@ data:extend({
 					weights = {0.070, 0.070, 0.070, 0.070, 0.070, 0.070, 0.015, 0.070, 0.070, 0.070, 0.015, 0.050, 0.070, 0.070, 0.065, 0.070 } --, 0.070, 0.050, 0.050, 0.050, 0.050 }
 				}
 			},
-			inner_corner =
-			{
-				picture = "__"..fullModName.."__/graphics/terrain/dirt/dirt-inner-corner.png",
-				count = 8
-			},
-			outer_corner =
-			{
-				picture = "__"..fullModName.."__/graphics/terrain/dirt/dirt-outer-corner.png",
-				count = 8
-			},
-			side =
-			{
-				picture = "__"..fullModName.."__/graphics/terrain/dirt/dirt-side.png",
-				count = 8
-			},
-			o_transition =
-			{
-				picture = "__"..fullModName.."__/graphics/terrain/dirt/dirt-o.png",
-				count = 1
-			},
-			u_transition =
-			{
-				picture = "__"..fullModName.."__/graphics/terrain/dirt/dirt-u.png",
-				count = 8
-			}
-
+			-- 2.1 replaced the separate inner_corner/outer_corner/side/o_transition/u_transition
+			-- picture fields with a single combined-spritesheet "transition" field (TileTransitions).
+			-- The mod's existing per-edge PNGs don't match that new spritesheet+layout format, so
+			-- transitions are disabled here (flat edges) until new transition art is authored.
+			empty_transitions = true,
 		},
 		walking_sound =
 		{
@@ -82,7 +61,7 @@ data:extend({
 			}
 		},
 		map_color={r=92, g=50, b=17},
-		pollution_absorption_per_second=0,
+		absorptions_per_second={pollution=0},
 		vehicle_friction_modifier = dirt_vehicle_friction_modifier
 	}
 })

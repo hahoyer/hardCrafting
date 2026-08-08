@@ -10,7 +10,7 @@ data
     ["burner-mining-drill"]
     .energy_source
     .fuel_inventory_size
-    = settings.startup["burner-miner-fuel-slots"].value
+    = tonumber(settings.startup["burner-miner-fuel-slots"].value)
 
 
 

@@ -19,10 +19,6 @@ if settings.startup["hardcrafting-rich-ores"].value == true then
 			order = "f[copper-ore]2",
 			stack_size = 50
 		},
-		{
-			type = "noise-layer",
-			name = "rich-copper-ore"
-		},
 		resource(
 			{
 				name = "rich-copper-ore",

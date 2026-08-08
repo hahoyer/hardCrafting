@@ -16,11 +16,11 @@ data:extend({
 		type = "recipe",
 		name = "pulverizer",
 		ingredients = {
-			{"stone", 20},{"steel-plate",10},{"iron-gear-wheel",15},{"electronic-circuit",5}
+			{type="item", name="stone", amount=20},{type="item", name="steel-plate", amount=10},{type="item", name="iron-gear-wheel", amount=15},{type="item", name="electronic-circuit", amount=5}
 		},
 		enabled = false,
 		energy_required = 3,
-		result = "pulverizer"
+		results = {{type="item", name="pulverizer", amount=1}}
 	},
 	{
 		type = "recipe-category",
@@ -41,7 +41,7 @@ pulverizer.minable.result = "pulverizer"
 pulverizer.icon =  "__"..fullModName.."__/graphics/icons/pulverizer.png"
 pulverizer.icon_size = 32
 
-pulverizer.animation = {
+pulverizer.graphics_set.animation = {
 	filename = "__"..fullModName.."__/graphics/entity/pulverizer-base.png",
 	line_length = 1,
 	width = 129,
@@ -51,9 +51,11 @@ pulverizer.animation = {
 	direction_count = 1,
 	shift = {0.421875, 0},
 }
-pulverizer.working_visualisations = deepcopy(data.raw["furnace"]["electric-furnace"].working_visualisations)
-table.remove(pulverizer.working_visualisations,1)
-table.insert(pulverizer.working_visualisations, {animation={
+pulverizer.graphics_set.working_visualisations = deepcopy(
+    data.raw["furnace"]["electric-furnace"].graphics_set.working_visualisations
+)
+table.remove(pulverizer.graphics_set.working_visualisations,1)
+table.insert(pulverizer.graphics_set.working_visualisations, {animation={
 	filename = "__"..fullModName.."__/graphics/entity/crush-animation.png",
 	priority = "high",
 	line_length = 11,

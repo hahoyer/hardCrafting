@@ -16,10 +16,10 @@ data:extend({
 		type = "recipe",
 		name = "crusher",
 		ingredients = {
-			{"stone", 15},{"electronic-circuit",2},{"iron-gear-wheel",5}
+			{type="item", name="stone", amount=15},{type="item", name="electronic-circuit", amount=2},{type="item", name="iron-gear-wheel", amount=5}
 		},
 		enabled = false,
-		result = "crusher"
+		results = {{type="item", name="crusher", amount=1}}
 	},
 	{
 		type = "recipe-category",
@@ -40,7 +40,7 @@ crusher.energy_source.emissions = 0.005
 crusher.icon_size = 32
 
 crusher.icon =  "__"..fullModName.."__/graphics/icons/crusher.png"
-crusher.animation = {
+crusher.graphics_set.animation = {
 	filename = "__"..fullModName.."__/graphics/entity/crusher-base.png",
 	line_length = 1,
 	width = 129,
@@ -50,9 +50,9 @@ crusher.animation = {
 	direction_count = 1,
 	shift = {0.421875, 0},
 }
-crusher.working_visualisations = deepcopy(data.raw["furnace"]["electric-furnace"].working_visualisations)
-table.remove(crusher.working_visualisations,1)
-table.insert(crusher.working_visualisations, {animation={
+crusher.graphics_set.working_visualisations = deepcopy(data.raw["furnace"]["electric-furnace"].graphics_set.working_visualisations)
+table.remove(crusher.graphics_set.working_visualisations,1)
+table.insert(crusher.graphics_set.working_visualisations, {animation={
 	filename = "__"..fullModName.."__/graphics/entity/crush-animation.png",
 	priority = "high",
 	line_length = 11,

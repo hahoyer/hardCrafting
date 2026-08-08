@@ -4,10 +4,6 @@ if settings.startup["hardcrafting-hard-oil"].value == true then
 
 	data:extend({
 		{
-			type = "noise-layer",
-			name = "oil-sand"
-		},
-		{
 			type = "autoplace-control",
 			name = "oil-sand",
 			localised_name = {"", "[entity=oil-sand] ", {"entity-name.oil-sand"}},
@@ -57,7 +53,7 @@ if settings.startup["hardcrafting-hard-oil"].value == true then
 		{
 			type = "recipe",
 			name = "fracking-fluid",
-			category = "oil-processing",
+			categories = {"oil-processing"},
 			enabled = false,
 			energy_required = 5,
 			ingredients =
@@ -78,7 +74,7 @@ if settings.startup["hardcrafting-hard-oil"].value == true then
 		{
 			type = "technology",
 			name = "oil-fracking",
-			icon_size = 256, icon_mipmaps = 4,
+			icon_size = 256,
 			icon = "__base__/graphics/technology/oil-processing.png",
 			prerequisites = {"oil-processing"},
 			effects =

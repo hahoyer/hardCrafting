@@ -7,10 +7,10 @@ local resourceRecipes = {
 	"copper-dust",
 	"copper-dust-big",
 	"copper-sulfat",
-	"copper-plate|sulfat",
+	"copper-plate_sulfat",
 	
 	"steel-dust",
-	"steel-dust|2",
+	"steel-dust_2",
 	"coal-dust",
 	"gravel-pile",
 	"stone-brick"

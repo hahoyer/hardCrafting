@@ -40,8 +40,8 @@ local function searchOreAmount(tableOfIngredients,nameToSearch)
 	end
 	return 0
 end
-local resultingCount = c.result_count
-if not resultingCount then resultingCount=1 end
+local resultingCount = searchOreAmount(c.results, "iron-plate")
+if resultingCount == 0 then resultingCount=1 end
 ironOreToPlateFactor = resultingCount / searchOreAmount(c.ingredients,"iron-ore")
 info("1x Iron-ore = "..tostring(ironOreToPlateFactor).."x iron-plate")
 
@@ -53,8 +53,8 @@ end
 data.raw["recipe"]["iron-plate"] = nil
 --       item Name     category   subgroup     time    ingredients     		products
 -- Tier1
-addRecipe("iron-plate|nugget","smelting","iron",1,{{"iron-nugget",1}},		{{"iron-plate",c(1)}},"a[plate]6")
-data.raw["recipe"]["iron-plate|nugget"].icon = "__"..fullModName.."__/graphics/icons/iron-plate-nugget.png"
+addRecipe("iron-plate_nugget","smelting","iron",1,{{"iron-nugget",1}},		{{"iron-plate",c(1)}},"a[plate]6")
+data.raw["recipe"]["iron-plate_nugget"].icon = "__"..fullModName.."__/graphics/icons/iron-plate-nugget.png"
 
 addRecipe("iron-plate","smelting","iron",3.5,{{"iron-ore",2}},				{{"iron-plate",c(1)},{"iron-slag",1}},"a[plate]1")
 data.raw["recipe"]["iron-plate"].icon = "__"..fullModName.."__/graphics/icons/iron-plate-impure.png"
@@ -68,14 +68,14 @@ addRecipe("crushed-iron","crusher","iron",16.5,{{"iron-ore",10}},			{{"crushed-i
 data.raw["recipe"]["crushed-iron"].icon = "__"..fullModName.."__/graphics/icons/crushed-iron-impure.png"
 addTechnologyUnlocksRecipe("crusher","crushed-iron")
 
-addRecipe("iron-plate|1","smelting","iron",		3.5,{{"crushed-iron",2}},	{{"iron-plate",c(2)},{"iron-slag",1}},"a[plate]4")
-data.raw["recipe"]["iron-plate|1"].icon = "__"..fullModName.."__/graphics/icons/iron-plate-crushed.png"
-addTechnologyUnlocksRecipe("crusher","iron-plate|1")
+addRecipe("iron-plate_1","smelting","iron",		3.5,{{"crushed-iron",2}},	{{"iron-plate",c(2)},{"iron-slag",1}},"a[plate]4")
+data.raw["recipe"]["iron-plate_1"].icon = "__"..fullModName.."__/graphics/icons/iron-plate-crushed.png"
+addTechnologyUnlocksRecipe("crusher","iron-plate_1")
 
 -- Tier3
 addRecipe("pulverized-iron","pulverizer","iron",5.5,{{"crushed-iron",3},{"gravel",4}},	{{"pulverized-iron",3},{"iron-nugget",2},{"iron-slag",2}},"c[pulverized-iron]4")
 addTechnologyUnlocksRecipe("pulverizer","pulverized-iron")
 
-addRecipe("iron-plate|2","smelting","iron",	1.75,{{"pulverized-iron",1}},	{{"iron-plate",c(1)}},"a[plate]5")
-data.raw["recipe"]["iron-plate|2"].icon = "__"..fullModName.."__/graphics/icons/iron-plate-pulverized.png"
-addTechnologyUnlocksRecipe("pulverizer","iron-plate|2")
+addRecipe("iron-plate_2","smelting","iron",	1.75,{{"pulverized-iron",1}},	{{"iron-plate",c(1)}},"a[plate]5")
+data.raw["recipe"]["iron-plate_2"].icon = "__"..fullModName.."__/graphics/icons/iron-plate-pulverized.png"
+addTechnologyUnlocksRecipe("pulverizer","iron-plate_2")

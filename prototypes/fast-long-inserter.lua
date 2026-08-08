@@ -18,12 +18,12 @@ if settings.startup["hardcrafting-extra-inserters"].value == true then
                 name = "fast-long-inserter",
                 enabled = "false",
                 ingredients = {
-                    {"electronic-circuit", 2},
-                    {"iron-gear-wheel", 1},
-                    {"iron-plate", 2},
-                    {"inserter", 1},
+                    {type="item", name="electronic-circuit", amount=2},
+                    {type="item", name="iron-gear-wheel", amount=1},
+                    {type="item", name="iron-plate", amount=2},
+                    {type="item", name="inserter", amount=1},
                 },
-                result = "fast-long-inserter",
+                results = {{type="item", name="fast-long-inserter", amount=1}},
             },
         }
     )

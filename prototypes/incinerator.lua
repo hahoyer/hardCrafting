@@ -17,11 +17,11 @@ data:extend({
     type = "recipe",
     name = "incinerator",
     ingredients = {
-			{"stone", 25},{"steel-plate",15},{"iron-gear-wheel",10},{"steel-furnace",2}
+			{type="item", name="stone", amount=25},{type="item", name="steel-plate", amount=15},{type="item", name="iron-gear-wheel", amount=10},{type="item", name="steel-furnace", amount=2}
 		},
 		enabled = false,
 		energy_required = 1,
-    result = "incinerator"
+    results = {{type="item", name="incinerator", amount=1}}
   }
 })
 

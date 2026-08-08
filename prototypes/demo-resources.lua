@@ -62,20 +62,12 @@ function resource(resource_parameters, autoplace_parameters)
 		{
 			sheet =
 			{
-				filename = "__"..fullModName.."__/graphics/entity/" .. resource_parameters.name .. "/" .. resource_parameters.name .. ".png",
+				filename = "__"..fullModName.."__/graphics/entity/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. ".png",
 				priority = "extra-high",
-				size = 64,
+				size = 128,
 				frame_count = 8,
 				variation_count = 8,
-				hr_version =
-				{
-					filename = "__"..fullModName.."__/graphics/entity/" .. resource_parameters.name .. "/hr-" .. resource_parameters.name .. ".png",
-					priority = "extra-high",
-					size = 128,
-					frame_count = 8,
-					variation_count = 8,
-					scale = 0.5
-				}
+				scale = 0.5
 			}
 		},
 		map_color = resource_parameters.map_color

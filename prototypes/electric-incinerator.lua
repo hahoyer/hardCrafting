@@ -17,11 +17,11 @@ data:extend({
 		type = "recipe",
 		name = "electric-incinerator",
 		ingredients = {
-			{"stone", 25},{"steel-plate",15},{"iron-gear-wheel",10},{"electric-furnace",2}
+			{type="item", name="stone", amount=25},{type="item", name="steel-plate", amount=15},{type="item", name="iron-gear-wheel", amount=10},{type="item", name="electric-furnace", amount=2}
 		},
 		enabled = false,
 		energy_required = 5,
-		result = "electric-incinerator"
+		results = {{type="item", name="electric-incinerator", amount=1}}
 	}
 })
 
@@ -33,7 +33,7 @@ incinerator.energy_usage = "450kW"
 incinerator.source_inventory_size = 1
 incinerator.result_inventory_size = 1
 incinerator.minable.result = "electric-incinerator"
-incinerator.module_specification.module_slots = 1
+incinerator.module_slots = 1
 data:extend({ incinerator })
 
 -- technology

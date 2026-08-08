@@ -25,32 +25,41 @@ function addItem(itemName, subgroup, order, stackSize)
 end
 
 
-function addRecipe(name,category,subgroup,timeRequired,ingredients,results,order)
-	local resultsDetailled = {}
-	if not results then
-		print("No results found for recipe with name: "..name)
+-- Converts old-style shorthand entries ({"name", amount}) to the mandatory
+-- table format ({type=..., name=..., amount=...}) required by recipe ingredients/results.
+local function toDetailedIngredientList(list, listDescription, recipeName)
+	local detailed = {}
+	if not list then
+		print("No "..listDescription.." found for recipe with name: "..recipeName)
+		return detailed
 	end
-	for _,s in pairs(results) do
+	for _,s in pairs(list) do
 		if s["type"] then
-			table.insert(resultsDetailled,s)
+			table.insert(detailed,s)
 		else
 			local typ = "item"
 			if s[1] == "sulfuric-acid" or s[1] == "water" then
 				typ = "fluid"
 			end
-			table.insert(resultsDetailled, {type=typ, name=s[1], amount=s[2]})
+			table.insert(detailed, {type=typ, name=s[1], amount=s[2]})
 		end
 	end
-	local imageName = removeAfterSign(name,"|")
+	return detailed
+end
+
+function addRecipe(name,category,subgroup,timeRequired,ingredients,results,order)
+	local ingredientsDetailled = toDetailedIngredientList(ingredients, "ingredients", name)
+	local resultsDetailled = toDetailedIngredientList(results, "results", name)
+	local imageName = removeAfterSign(name,"_")
 	data:extend({
 	{
 		type = "recipe",
 	icon_size = 32,
     name = name,
-    category = category,
+    categories = {category},
 		subgroup = subgroup,
     energy_required = timeRequired,
-    ingredients = ingredients,
+    ingredients = ingredientsDetailled,
 		icon = "__"..fullModName.."__/graphics/icons/"..imageName..".png",
     results = resultsDetailled,
 		order = order

@@ -62,7 +62,7 @@ function recipeNamesOfItems(itemNameS)
 	for recipeName,data in pairs(data.raw.recipe) do
 		if data.result and itemNamesSet[data.result] then
 			recipeNamesSet[recipeName] = true
-		elseif data.results then 
+		elseif data.results then
 			for _,resultData in pairs(data.results) do
 				if itemNamesSet[resultData.name] then
 					recipeNamesSet[recipeName] = true
@@ -71,7 +71,7 @@ function recipeNamesOfItems(itemNameS)
 			end
 		end
 	end
-	
+
 	return set.table(recipeNamesSet) -- convert set of recipeNames to table
 end
 
@@ -131,9 +131,9 @@ end
 
 function recipeReplaceIngredient(name, ingredient1, ingredient2, amount)
 	for k, v in pairs(data.raw["recipe"][name].ingredients) do
-		if v[1] == ingredient1 then table.remove(data.raw["recipe"][name].ingredients, k) end
+		if v.name == ingredient1 or v[1] == ingredient1 then table.remove(data.raw["recipe"][name].ingredients, k) end
 	end
-	table.insert(data.raw["recipe"][name].ingredients,{ingredient2, amount})
+	table.insert(data.raw["recipe"][name].ingredients,{type="item", name=ingredient2, amount=amount})
 end
 
 
@@ -161,32 +161,28 @@ function recipeItemAmount(recipe,itemName)
 	for _,tuple in pairs(recipe.ingredients) do
 		if tuple["name"] == itemName then
 			return tuple["amount"]
-		elseif tuple[1] == itemName then 
+		elseif tuple[1] == itemName then
 			return tuple[2]
 		end
 	end
 	return 0
 end
 
-function recipeResultsItemAmount(recipe,itemName,difficulty)
-	if difficulty == nil then difficulty = "normal" end
-	if recipe.results == nil and recipe.result == nil then
-		return recipeResultsItemAmount(recipe[difficulty],itemName,difficulty)
-	end
-	if recipe.results == nil then
-		if recipe.result == itemName then
-			return recipe.result_count or 1
-		end
-		return 0
-	end
-	for _,tuple in pairs(recipe.results) do
-		if tuple["name"] == itemName then
-			return tuple["amount"]
-		elseif tuple[1] == itemName then
-			return tuple[2]
-		end
-	end
-	return 0
+function recipeResultsItemAmount(recipe, itemName)
+    if recipe.results == nil then
+        if recipe.result == itemName then
+            return recipe.result_count or 1
+        end
+        return 0
+    end
+    for _, tuple in pairs(recipe.results) do
+        if tuple["name"] == itemName then
+            return tuple["amount"]
+        elseif tuple[1] == itemName then
+            return tuple[2]
+        end
+    end
+    return 0
 end
 
 function recipeResultsContain(recipe,itemName)

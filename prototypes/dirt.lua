@@ -9,7 +9,7 @@ addItem("dirt","by-products","d[dirt]",50)
 local placeAsTile = {
 	result = "dirt-marker",
 	condition_size = 3,
-	condition = { "water-tile" }
+	condition = { layers = { water_tile = true } }
 }
 data.raw["item"]["dirt"].place_as_tile = placeAsTile
 

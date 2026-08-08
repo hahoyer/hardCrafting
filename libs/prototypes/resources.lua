@@ -6,6 +6,6 @@ function ressourceItemMinMaxProb(itemName, amountMin, amountMax, probability)
 		name = itemName,
 		amount_min = amountMin,
 		amount_max = amountMax,
-		probability = probability
+		independent_probability = probability
 	}
 end

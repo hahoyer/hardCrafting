@@ -3,7 +3,6 @@ require "libs.prototypes.all"
 
 -- Features:
 require "prototypes.fast-long-inserter"
-require "prototypes.long-filter-inserter"
 
 require "prototypes.incinerator"
 require "prototypes.electric-incinerator"

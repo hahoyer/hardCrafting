@@ -16,7 +16,7 @@ local types = {
 }
 
 for _,typ in pairs(types) do
-	for name,itemTable in pairs(data.raw[typ]) do
+	for name,itemTable in pairs(data.raw[typ] or {}) do
 
 		local time = 4
 		if burnTime[name] then time = burnTime[name] end
@@ -41,14 +41,14 @@ for _,typ in pairs(types) do
 					type = "recipe",
 					icon_size = 32,
 					name = "incinerate_"..name,
-					category = "incinerator",
+					categories = {"incinerator"},
 					icon = "__"..fullModName.."__/graphics/icons/fire.png",
 					hidden = true,
-					ingredients = {{name, 1}},
+					ingredients = {{type="item", name=name, amount=1}},
 					energy_required = time,
 					results =
 					{
-						{type="item", name="coal-dust", probability=0.1, amount_min=1, amount_max=1},
+						{type="item", name="coal-dust", independent_probability=0.1, amount_min=1, amount_max=1},
 					}
 				}
 			})

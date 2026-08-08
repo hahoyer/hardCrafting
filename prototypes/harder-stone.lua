@@ -15,6 +15,6 @@ addRecipe("stone-brick","crusher","terrain",2,{{"stone",2}},{{"stone-brick",2},{
 data.raw["recipe"]["stone-brick"].icon = "__"..fullModName.."__/graphics/icons/stone-brick.png"
 addTechnologyUnlocksRecipe("crusher","stone-brick")
 
-addRecipe("gravel|pulverizer","pulverizer","by-products",1,{{"stone",1}},{{"gravel",2}},"b[gravel]1")
-data.raw["recipe"]["gravel|pulverizer"].icon = "__"..fullModName.."__/graphics/icons/gravel-pulverizer.png"
-addTechnologyUnlocksRecipe("pulverizer","gravel|pulverizer")
+addRecipe("gravel_pulverizer","pulverizer","by-products",1,{{"stone",1}},{{"gravel",2}},"b[gravel]1")
+data.raw["recipe"]["gravel_pulverizer"].icon = "__"..fullModName.."__/graphics/icons/gravel-pulverizer.png"
+addTechnologyUnlocksRecipe("pulverizer","gravel_pulverizer")

@@ -41,8 +41,8 @@ local function searchOreAmount(tableOfIngredients,nameToSearch)
 	return 0
 end
 
-local resultingCount = c.result_count
-if not resultingCount then resultingCount=1 end
+local resultingCount = searchOreAmount(c.results, "copper-plate")
+if resultingCount == 0 then resultingCount=1 end
 copperOreToPlateFactor = resultingCount / searchOreAmount(c.ingredients,"copper-ore")
 info("1x Copper-ore = "..tostring(copperOreToPlateFactor).."x copper-plate")
 
@@ -62,18 +62,18 @@ addRecipe("copper-sludge","crusher","copper",4,{{"copper-sludge",2}},{{"copper-d
 data.raw["recipe"]["copper-sludge"].icon = "__"..fullModName.."__/graphics/icons/sludge-processing.png"
 addTechnologyUnlocksRecipe("crusher","copper-sludge")
 
-addRecipe("copper-plate|dust","smelting","copper",2,{{"copper-dust",1}},{{"copper-plate",c(1)}},"a[copper-plate]4")
-data.raw["recipe"]["copper-plate|dust"].icon = "__"..fullModName.."__/graphics/icons/copper-plate-dust.png"
-addTechnologyUnlocksRecipe("crusher","copper-plate|dust")
+addRecipe("copper-plate_dust","smelting","copper",2,{{"copper-dust",1}},{{"copper-plate",c(1)}},"a[copper-plate]4")
+data.raw["recipe"]["copper-plate_dust"].icon = "__"..fullModName.."__/graphics/icons/copper-plate-dust.png"
+addTechnologyUnlocksRecipe("crusher","copper-plate_dust")
 
 -- Tier3
 addRecipe("copper-dust","pulverizer","copper",6,{{"copper-ore",4},{"gravel",4}},{{"copper-dust",5},{"sulfur-dust",3}},"b[copper-dust]1")
 data.raw["recipe"]["copper-dust"].icon = "__"..fullModName.."__/graphics/icons/copper-dust-impure.png"
 addTechnologyUnlocksRecipe("pulverizer","copper-dust")
 
-addRecipe("sulfur|dust","crafting","copper",2,{{"sulfur-dust",10}},{{"sulfur",1}},"c")
-data.raw["recipe"]["sulfur|dust"].icon = "__"..fullModName.."__/graphics/icons/sulfur-from-dust.png"
-addTechnologyUnlocksRecipe("pulverizer","sulfur|dust")
+addRecipe("sulfur_dust","crafting","copper",2,{{"sulfur-dust",10}},{{"sulfur",1}},"c")
+data.raw["recipe"]["sulfur_dust"].icon = "__"..fullModName.."__/graphics/icons/sulfur-from-dust.png"
+addTechnologyUnlocksRecipe("pulverizer","sulfur_dust")
 
 addRecipe("sulfur-dust","pulverizer","copper",2,{{"sulfur",1}},{{"sulfur-dust",8}},"d")
 data.raw["recipe"]["sulfur-dust"].icon = "__"..fullModName.."__/graphics/icons/dust-from-sulfur.png"
@@ -83,8 +83,8 @@ addTechnologyUnlocksRecipe("pulverizer","sulfur-dust")
 addRecipe("copper-sulfat","crafting","copper",2,{{"copper-dust",9},{"sulfur-dust",5}},{{"copper-sulfat",10}},"e")
 addTechnologyUnlocksRecipe("oil-processing","copper-sulfat")
 
-addRecipe("copper-plate|sulfat","chemistry","copper",2,
+addRecipe("copper-plate_sulfat","chemistry","copper",2,
 	{{type="item",name="copper-sulfat",amount=6},{type="fluid",name="water",amount=10}},
 	{{"copper-plate",c(7)},{"sulfuric-acid",5},{"gravel",1}},"a[copper-plate]6")
-data.raw["recipe"]["copper-plate|sulfat"].icon = "__"..fullModName.."__/graphics/icons/copper-plate-sulfat.png"
-addTechnologyUnlocksRecipe("oil-processing","copper-plate|sulfat")
+data.raw["recipe"]["copper-plate_sulfat"].icon = "__"..fullModName.."__/graphics/icons/copper-plate-sulfat.png"
+addTechnologyUnlocksRecipe("oil-processing","copper-plate_sulfat")

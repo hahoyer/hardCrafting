@@ -13,17 +13,17 @@ if cost<1 then cost = 1 end -- Beware of rounding down to zero
 addRecipe("steel-dust","crafting","iron",3,{{"crushed-iron",cost},{"coal-dust",2}},		{{"steel-dust",1}},"d2[steel-plate]")
 data.raw["recipe"]["steel-dust"].icon = "__"..fullModName.."__/graphics/icons/steel-dust-crushed.png"
 
-addRecipe("steel-dust|2","crafting","iron",2,{{"pulverized-iron",cost},{"coal-dust",1}},		{{"steel-dust",1}},"d2[steel-plate]")
-data.raw["recipe"]["steel-dust|2"].icon = "__"..fullModName.."__/graphics/icons/steel-dust-pulverized.png"
+addRecipe("steel-dust_2","crafting","iron",2,{{"pulverized-iron",cost},{"coal-dust",1}},		{{"steel-dust",1}},"d2[steel-plate]")
+data.raw["recipe"]["steel-dust_2"].icon = "__"..fullModName.."__/graphics/icons/steel-dust-pulverized.png"
 
-addRecipe("steel-plate|dust","smelting","raw-material",8,{{"steel-dust",1}},		{{"steel-plate",1}},"d3[steel-plate]")
-data.raw["recipe"]["steel-plate|dust"].icon = "__"..fullModName.."__/graphics/icons/steel-plate-dust.png"
+addRecipe("steel-plate_dust","smelting","raw-material",8,{{"steel-dust",1}},		{{"steel-plate",1}},"d3[steel-plate]")
+data.raw["recipe"]["steel-plate_dust"].icon = "__"..fullModName.."__/graphics/icons/steel-plate-dust.png"
 
 -- technology
 data:extend({
 	{
 		type = "technology",
-		icon_size = 256, icon_mipmaps = 4,
+		icon_size = 256,
 		name = "steel-processing-2",
 		icon = "__base__/graphics/technology/steel-processing.png",
 		prerequisites = {"steel-processing"},
@@ -38,5 +38,5 @@ data:extend({
 })
 
 addTechnologyUnlocksRecipe("steel-processing-2", "steel-dust")
-addTechnologyUnlocksRecipe("steel-processing-2", "steel-dust|2")
-addTechnologyUnlocksRecipe("steel-processing-2", "steel-plate|dust")
+addTechnologyUnlocksRecipe("steel-processing-2", "steel-dust_2")
+addTechnologyUnlocksRecipe("steel-processing-2", "steel-plate_dust")

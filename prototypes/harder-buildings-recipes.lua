@@ -18,28 +18,21 @@ if settings.startup["hardcrafting-complex-crafting-byproduct"].value == true the
 	addRecipe("scrap-metal-processing","hc-pulverizer","by-products",8,{{"scrap-metal",5}},{{"pulverized-iron",3},{"copper-dust",2}},"z[scrap-metal]")
 
 	for recipeName,recipe in pairs(data.raw["recipe"]) do
-		local resultItem = recipe.result
-		local item = data.raw["item"][resultItem]
-		if item and item.place_result and recipeWhiteList[recipeName] then
-			local results = recipe.results
-			if not results then
-				local resultAmount = recipe.result_count or 1
-				results = { {type="item", name=recipe.result, amount=resultAmount} }
-			end
-			table.insert(results, { type="item", name="scrap-metal",amount=1})
-			recipe.results = results
-			recipe.result = nil
-			recipe.result_count = nil
-			if not recipe.icon then
-				recipe.icon = data.raw["item"][resultItem].icon
-    			recipe.icon_size = data.raw["item"][resultItem].icon_size
-    			recipe.icon_mipmaps = data.raw["item"][resultItem].icon_mipmaps
-			end
-			if not recipe.subgroup then
-				recipe.subgroup = data.raw["item"][resultItem].subgroup
-			end
-			if not recipe.order then
-				recipe.order = data.raw["item"][resultItem].order
+		if recipeWhiteList[recipeName] then
+			local resultItem = recipe.results and recipe.results[1] and recipe.results[1].name
+			local item = resultItem and data.raw["item"][resultItem]
+			if item and item.place_result then
+				table.insert(recipe.results, { type="item", name="scrap-metal",amount=1})
+				if not recipe.icon then
+					recipe.icon = item.icon
+    				recipe.icon_size = item.icon_size
+				end
+				if not recipe.subgroup then
+					recipe.subgroup = item.subgroup
+				end
+				if not recipe.order then
+					recipe.order = item.order
+				end
 			end
 		end
 	end

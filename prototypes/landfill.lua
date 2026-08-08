@@ -8,11 +8,11 @@ if data.raw["item"]["dirt"] ~= nil then
 				order= "c[landfill]-b[sand]",
 				energy_required = 2,
 				ingredients = {
-					{"sand", 30}
+					{type="item", name="sand", amount=30}
 				},
 				icon = "__"..fullModName.."__/graphics/icons/landfill-from-sand.png",
 				icon_size=32,
-				result = "landfill"
+				results = {{type="item", name="landfill", amount=1}}
 			}
 		})
 	end
