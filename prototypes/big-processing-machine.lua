@@ -96,7 +96,7 @@ table.insert(processer.fluid_boxes,{
 	pipe_picture = assembler_pictures.assembler2pipepictures,
 	pipe_covers = pipecoverspictures(),
 	volume = 1000,
-	pipe_connections = {{ flow_direction="output", direction = defines.direction.south, position = {0, 3} }}
+	pipe_connections = {{ flow_direction="output", direction = defines.direction.south, position = {0, 2.2} }}
 })
 processer.fluid_boxes[1].pipe_picture.north.filename = "__"..fullModName.."__/graphics/entity/big-processing-machine/pipe-north.png"
 processer.fluid_boxes[2].pipe_picture.north.filename = "__"..fullModName.."__/graphics/entity/big-processing-machine/pipe-north.png"
