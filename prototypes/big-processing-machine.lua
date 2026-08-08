@@ -84,22 +84,26 @@ table.insert(processer.graphics_set.working_visualisations, {animation={
 }})
 
 processer.fluid_boxes = {}
+-- deepcopy: assembler2pipepictures is a shared table also used by vanilla
+-- assembling-machine-2 and pumpjack; mutating it in place corrupted their pipe sprites too.
+local processer_pipe_picture = deepcopy(assembler_pictures.assembler2pipepictures)
+processer_pipe_picture.north.filename = "__"..fullModName.."__/graphics/entity/big-processing-machine/pipe-north.png"
+processer_pipe_picture.north.width = 41
+processer_pipe_picture.north.height = 40
 table.insert(processer.fluid_boxes,{
 	production_type = "input",
-	pipe_picture = assembler_pictures.assembler2pipepictures,
+	pipe_picture = processer_pipe_picture,
 	pipe_covers = pipecoverspictures(),
 	volume = 1000,
 	pipe_connections = {{ flow_direction="input", direction = defines.direction.north, position = {0, -2.2} }}
 })
 table.insert(processer.fluid_boxes,{
 	production_type = "output",
-	pipe_picture = assembler_pictures.assembler2pipepictures,
+	pipe_picture = processer_pipe_picture,
 	pipe_covers = pipecoverspictures(),
 	volume = 1000,
 	pipe_connections = {{ flow_direction="output", direction = defines.direction.south, position = {0, 2.2} }}
 })
-processer.fluid_boxes[1].pipe_picture.north.filename = "__"..fullModName.."__/graphics/entity/big-processing-machine/pipe-north.png"
-processer.fluid_boxes[2].pipe_picture.north.filename = "__"..fullModName.."__/graphics/entity/big-processing-machine/pipe-north.png"
 processer.minable.result = "big-processing-machine"
 processer.fast_replaceable_group = nil
 processer.next_upgrade = nil

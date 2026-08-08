@@ -19,7 +19,15 @@ if settings.startup["hardcrafting-hard-oil"].value == true then
 	oilSand.minable.required_fluid = "fracking-fluid"
 	oilSand.minable.results[1].amount_min = 20
 	oilSand.minable.results[1].amount_max = 30
+	-- oil-sand.png replaces crude-oil's sprite sheet but isn't laid out the same way
+	-- (crude-oil is a 4-frame strip); treated as a single static frame matching the
+	-- real file size so the crop can't exceed the actual image bounds.
 	oilSand.stages.sheet.filename = "__"..fullModName.."__/graphics/entity/oil-sand/oil-sand.png"
+	oilSand.stages.sheet.width = 300
+	oilSand.stages.sheet.height = 61
+	oilSand.stages.sheet.frame_count = 1
+	oilSand.stages.sheet.line_length = 1
+	oilSand.stages.sheet.variation_count = 1
 
     oilSand.autoplace = resource_autoplace.resource_autoplace_settings{
 		name = "oil-sand",
