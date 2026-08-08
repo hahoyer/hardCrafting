@@ -6,8 +6,6 @@ require "prototypes.incinerator-recipes"
 require "prototypes.easier-but-more-trains"
 require "prototypes.advanced-oil-final"
 
-require "prototypes.stacking"
-
 require "prototypes.smaller-ore-stacks"
 require "prototypes.productivity-support"
 
