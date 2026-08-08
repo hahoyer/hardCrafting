@@ -47,6 +47,12 @@ if settings.startup["hardcrafting-hard-oil"].value == true then
 
 	data:extend({oilSand})
 
+	-- 2.0 requires every autoplaced resource to be explicitly whitelisted in the
+	-- planet's own map_gen_settings, or map generation ignores it entirely, no
+	-- matter how correct its own autoplace expression is.
+	data.raw.planet.nauvis.map_gen_settings.autoplace_controls["oil-sand"] = {}
+	data.raw.planet.nauvis.map_gen_settings.autoplace_settings.entity.settings["oil-sand"] = {}
+
 	local frackingFluid = deepcopy(data.raw.fluid["crude-oil"])
 	overwriteContent(frackingFluid,{
 		name="fracking-fluid",

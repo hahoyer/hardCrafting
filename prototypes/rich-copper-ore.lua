@@ -34,6 +34,12 @@ if settings.startup["hardcrafting-rich-ores"].value == true then
 		)
 	})
 
+	-- 2.0 requires every autoplaced resource to be explicitly whitelisted in the
+	-- planet's own map_gen_settings, or map generation ignores it entirely, no
+	-- matter how correct its own autoplace expression is.
+	data.raw.planet.nauvis.map_gen_settings.autoplace_controls["rich-copper-ore"] = {}
+	data.raw.planet.nauvis.map_gen_settings.autoplace_settings.entity.settings["rich-copper-ore"] = {}
+
 	data.raw.resource["rich-copper-ore"].minable.mining_particle = "copper-ore-particle"
 	data.raw["resource"]["rich-copper-ore"].minable.results = {
 		ressourceItemMinMaxProb("rich-copper-ore",	 1, 1, 0.8), -- 1 item at percentage 0.8 --

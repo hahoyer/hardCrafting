@@ -1,7 +1,5 @@
 local resource_autoplace = require('resource-autoplace')
 
-resource_autoplace.initialize_patch_set("oil-sand", false)
-
 -- copy of factorio 0.17.66 data\base\prototype\entity\demo-resources.lua
 local function autoplace_settings(name, order, coverage)
 	return
@@ -29,6 +27,13 @@ end
 
 function resource(resource_parameters, autoplace_parameters)
 	if coverage == nil then coverage = 0.02 end
+
+	-- Vanilla resources each register themselves with the patch-set system before
+	-- building their autoplace settings (see base/prototypes/entity/resources.lua);
+	-- this was previously hardcoded to "oil-sand" only, so every other resource
+	-- built through this function (rich-copper-ore, rich-iron-ore) never actually
+	-- got a patch set and therefore never generated on the map.
+	resource_autoplace.initialize_patch_set(resource_parameters.name, true)
 
 	return
 	{
