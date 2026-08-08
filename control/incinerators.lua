@@ -1,10 +1,10 @@
 entities["incinerator"]={}
 entities["incinerator"].build = function(entity)
-	table.insert(global.hardCrafting.incinerators,entity)
+	table.insert(storage.hardCrafting.incinerators,entity)
 end
 entities["electric-incinerator"]={}
 entities["electric-incinerator"].build = function(entity)
-	table.insert(global.hardCrafting.eincinerators,entity)
+	table.insert(storage.hardCrafting.eincinerators,entity)
 end
 
 ---------------------------------------------------
@@ -13,18 +13,18 @@ end
 
 function updateIncinerators()
 	if game.tick % 120 ~= 0 then return end
-	for key,entity in pairs(global.hardCrafting.incinerators) do
+	for key,entity in pairs(storage.hardCrafting.incinerators) do
 		if entity.valid then
 			reactivateIncineratorsInserters(entity,2)
 		else
-			global.hardCrafting.incinerators[key] = nil
+			storage.hardCrafting.incinerators[key] = nil
 		end
 	end
-	for key,entity in pairs(global.hardCrafting.eincinerators) do
+	for key,entity in pairs(storage.hardCrafting.eincinerators) do
 		if entity.valid then
 			reactivateIncineratorsInserters(entity,3)
 		else
-			global.hardCrafting.eincinerators[key] = nil
+			storage.hardCrafting.eincinerators[key] = nil
 		end
 	end
 end

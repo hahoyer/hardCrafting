@@ -7,7 +7,7 @@ function getMiningResultItems(resource)
 	local resultStacks = {}
 	for _,itemDescription in pairs(products) do
 		if itemDescription.type == "item" then
-			local prob = itemDescription.probability or 1
+			local prob = itemDescription.independent_probability or 1
 			local isInfinite = resource.prototype.infinite_resource
 			if isInfinite then
 				--NOTE: The minimum_resource_amount is calculated wrongly and the normal_resource_amount isn't available at all

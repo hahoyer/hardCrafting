@@ -7,14 +7,14 @@ require "libs.logging"
 
 --[[
  Data used:
-	global.schedule[tick][idEntity] = {
+	storage.schedule[tick][idEntity] = {
 		entity = $entity, 
 		[noTick = true],									-- no entity update - used when entity is premined (to remove asap)
 		[clearSchedule = true], 					-- used when entity is premined (to clear out of ordinary schedule)
 	}
-	global.entityData[idEntity] = { name=$name, ... }
-	global.entities_cleanup_required = boolean(check and remove all old events)
-	global.entityDataVersion = 4
+	storage.entityData[idEntity] = { name=$name, ... }
+	storage.entities_cleanup_required = boolean(check and remove all old events)
+	storage.entityDataVersion = 4
 
 
  Register custom entity build, tick or remove function:
@@ -69,23 +69,23 @@ TICK_SOON = 1 --game.tick used in cleanup when entity should be schedule randoml
 -- -------------------------------------------------
 
 function entities_init()
-	if global.schedule == nil then 
-		global.schedule = {}
-		global.entityData = {}
-		global.entityDataVersion = 4
+	if storage.schedule == nil then 
+		storage.schedule = {}
+		storage.entityData = {}
+		storage.entityDataVersion = 4
 	end
 	entities_migration()
 end
 
 function entities_migration()
-	if not global.entityDataVersion then
+	if not storage.entityDataVersion then
 		entities_migration_V3()
-		global.entityDataVersion = 3
+		storage.entityDataVersion = 3
 		info("Migrated entity data to v3")
 	end
-	if global.entityDataVersion < 4 then
+	if storage.entityDataVersion < 4 then
 		entities_migration_V4()
-		global.entityDataVersion = 4
+		storage.entityDataVersion = 4
 		info("Migrated entity data to v4")
 	end
 end
@@ -112,7 +112,7 @@ function entities_move(event)
 			local startPos = event.start_pos
 			local oldId = idOfPosition(entity.surface.index,startPos.x,startPos.y,entity.name)
 			-- update schedule list
-			for tick,list in pairs(global.schedule) do
+			for tick,list in pairs(storage.schedule) do
 				if list[oldId] ~= nil then
 					local scheduledEvent = list[oldId]
 					list[oldId] = nil
@@ -120,10 +120,10 @@ function entities_move(event)
 				end
 			end
 			-- update data
-			local data = global.entityData[oldId]
+			local data = storage.entityData[oldId]
 			info("data while moving: "..serpent.block(data).." for "..idOfEntity(entity))
-			global.entityData[oldId] = nil
-			global.entityData[idOfEntity(entity)] = data
+			storage.entityData[oldId] = nil
+			storage.entityData[idOfEntity(entity)] = data
 			
 			entities[name].move(entity,data,player,startPos)
 		else
@@ -143,8 +143,8 @@ function entities_settings_pasted(event)
 	local name = source.name
 	if entities[name] ~= nil then
 		if entities[name].copy ~= nil then
-			local srcData = global.entityData[idOfEntity(source)]
-			local targetData = global.entityData[idOfEntity(target)]
+			local srcData = storage.entityData[idOfEntity(source)]
+			local targetData = storage.entityData[idOfEntity(target)]
 			entities[name].copy(source,srcData,target,targetData)
 		end
 	end
@@ -156,40 +156,40 @@ end
 
 function entities_tick()
 	-- schedule events from migration
-	if global.schedule[TICK_ASAP] ~= nil then
-		if global.schedule[game.tick] == nil then global.schedule[game.tick] = {} end
-		for id,arr in pairs(global.schedule[TICK_ASAP]) do
+	if storage.schedule[TICK_ASAP] ~= nil then
+		if storage.schedule[game.tick] == nil then storage.schedule[game.tick] = {} end
+		for id,arr in pairs(storage.schedule[TICK_ASAP]) do
 			--info("scheduled entity "..id.." for now.")
-			global.schedule[game.tick][id] = arr
+			storage.schedule[game.tick][id] = arr
 		end
-		global.schedule[TICK_ASAP] = nil
+		storage.schedule[TICK_ASAP] = nil
 	end
-	if global.schedule[TICK_SOON] ~= nil then
-		for id,arr in pairs(global.schedule[TICK_SOON]) do
+	if storage.schedule[TICK_SOON] ~= nil then
+		for id,arr in pairs(storage.schedule[TICK_SOON]) do
 			local nextTick = game.tick + math.random(60)
-			if global.schedule[nextTick] == nil then global.schedule[nextTick] = {} end
-			global.schedule[nextTick][id] = arr
+			if storage.schedule[nextTick] == nil then storage.schedule[nextTick] = {} end
+			storage.schedule[nextTick][id] = arr
 		end
-		global.schedule[TICK_SOON] = nil
+		storage.schedule[TICK_SOON] = nil
 	end
 
-	if global.entities_cleanup_required then
+	if storage.entities_cleanup_required then
 		entities_cleanup_schedule()
-		global.entities_cleanup_required = false
+		storage.entities_cleanup_required = false
 	end
 
 	-- if no updates are scheduled return
-	if global.schedule[game.tick] == nil then
+	if storage.schedule[game.tick] == nil then
 		return
 	end
 
 	-- Execute all scheduled events
 	local entityIdsToClear = {}
-	for entityId,arr in pairs(global.schedule[game.tick]) do
+	for entityId,arr in pairs(storage.schedule[game.tick]) do
 		local entity = arr.entity
 		if entity and entity.valid then
 			if not arr.noTick then
-				local data = global.entityData[entityId]
+				local data = storage.entityData[entityId]
 				local name = entity.name
 				local nextUpdateInXTicks, reasonMessage
 				if entities[name] ~= nil then
@@ -218,9 +218,9 @@ function entities_tick()
 			end
 		end
 	end
-	global.schedule[game.tick] = nil
+	storage.schedule[game.tick] = nil
 	if #entityIdsToClear > 0 then
-		for tick,tickSchedule in pairs(global.schedule) do
+		for tick,tickSchedule in pairs(storage.schedule) do
 			for _,id in pairs(entityIdsToClear) do
 				tickSchedule[id] = nil
 			end
@@ -234,7 +234,7 @@ function entities_rotate(event)
 	if entities[name] ~= nil then
 		if entities[name].rotate ~= nil then
 			local entityId = idOfEntity(entity)
-			local data = global.entityData[entityId]
+			local data = storage.entityData[entityId]
 			entities[name].rotate(entity,data)
 		end
 	end
@@ -258,7 +258,7 @@ function entities_build(event)
 		local data = entities[name].build(entity)
 		if data ~= nil then
 			data.name = name
-			global.entityData[idOfEntity(entity)] = data
+			storage.entityData[idOfEntity(entity)] = data
 			return true
 		else
 			info("built entity doesn't use data: "..name)
@@ -280,7 +280,7 @@ function entities_pre_mined(event)
 	if entities[name] == nil then return end
 	local manuallyHandle = false
 	if entities[name].premine and event.player_index ~= nil then
-		local data = global.entityData[idOfEntity(entity)]
+		local data = storage.entityData[idOfEntity(entity)]
 		manuallyHandle = entities[name].premine(entity,data,game.players[event.player_index])
 	end
 	if not manuallyHandle then
@@ -295,7 +295,7 @@ function entities_marked_for_deconstruction(event)
 	local name = entity.name
 	if entities[name] == nil then return end
 	if entities[name].orderDeconstruct then
-		local data = global.entityData[idOfEntity(entity)]
+		local data = storage.entityData[idOfEntity(entity)]
 		entities[name].orderDeconstruct(entity,data,game.players[event.player_index])
 	end
 end
@@ -309,17 +309,17 @@ function scheduleAdd(entity, nextTick)
 		err("scheduleAdd can't be called for nil entity")
 		return nil
 	end
-	if global.schedule[nextTick] == nil then
-		global.schedule[nextTick] = {}
+	if storage.schedule[nextTick] == nil then
+		storage.schedule[nextTick] = {}
 	end
 	--info("schedule added for entity "..entity.name.." "..idOfEntity(entity).." at tick: "..nextTick)
 	local update = { entity = entity }
-	global.schedule[nextTick][idOfEntity(entity)] = update
+	storage.schedule[nextTick][idOfEntity(entity)] = update
 	return update
 end
 
 function entities_remove(entityId)
-	local data = global.entityData[entityId]
+	local data = storage.entityData[entityId]
 	if not data then return end
 	local name = data.name
 	--info("removing entity: "..name.." at: "..entityId.." with data: "..serpent.block(data))
@@ -330,14 +330,14 @@ function entities_remove(entityId)
 	else
 		warn("removing unknown entity: "..name.." at: "..entityId) -- .." with data: "..serpent.block(data))
 	end
-	global.entityData[entityId] = nil
+	storage.entityData[entityId] = nil
 end
 
 function entities_cleanup_schedule()
 	local count = 0
 	local toSchedule = {}
 	info("starting cleanup. Expect lag... ")
-	for tick,array in pairs(global.schedule) do
+	for tick,array in pairs(storage.schedule) do
 		if tick < game.tick then
 			for entityId,arr in pairs(array) do
 				if arr.entity.valid then
@@ -351,11 +351,11 @@ function entities_cleanup_schedule()
 				end
 				count = count + 1
 			end
-			global.schedule[tick] = nil
+			storage.schedule[tick] = nil
 		end
 	end
 	-- remove all entities that are already scheduled
-	for _,array in pairs(global.schedule) do
+	for _,array in pairs(storage.schedule) do
 		for entityId,_ in pairs(array) do
 			toSchedule[entityId] = nil
 		end
@@ -379,7 +379,7 @@ function entities_migration_V3()
 end
 
 function entities_migration_V2()
-	for tick,arr in pairs(global.schedule) do
+	for tick,arr in pairs(storage.schedule) do
 		for id,entity in pairs(arr) do
 			arr[id] = { entity = entity }
 		end
@@ -388,19 +388,19 @@ end
 
 function entities_rebuild_entityIds()
 	-- rebuild entityId:
-	-- global.schedule[tick][idEntity] = { entity = $entity, [noTick = true] }
-	-- global.entityData[idEntity] = { name=$name, ... }
+	-- storage.schedule[tick][idEntity] = { entity = $entity, [noTick = true] }
+	-- storage.entityData[idEntity] = { name=$name, ... }
 	local newSchedule = {}
 	local newEntityData = {}
-	for tick,scheduleList in pairs(global.schedule) do
+	for tick,scheduleList in pairs(storage.schedule) do
 		newSchedule[tick] = {}
 		for oldId,scheduleEntry in pairs(scheduleList) do
-			local data = global.entityData[oldId]
+			local data = storage.entityData[oldId]
 			local entity = scheduleEntry.entity
 			newSchedule[tick][idOfEntity(entity)] = scheduleEntry
 			newEntityData[idOfEntity(entity)] = data
 		end
 	end
-	global.schedule = newSchedule
-	global.entityData = newEntityData
+	storage.schedule = newSchedule
+	storage.entityData = newEntityData
 end

@@ -1,5 +1,5 @@
 function printMissingRecipeLocalization()
-	if not global.hardCrafting.localizationNotice then
+	if not storage.hardCrafting.localizationNotice then
 		local newLocale = {}
 		local newStrings = false
 		for name,table in pairs(game.players[1].force.recipes) do
@@ -7,7 +7,7 @@ function printMissingRecipeLocalization()
 			if recipeResultsItemAmount(table,"scrap-metal") > 0 then
 				print("recipe "..name.." might not have localization")
 				local itemName = table.products[1]["name"]
-				local item = game.item_prototypes[itemName]
+				local item = prototypes.item[itemName]
 				newLocale[name]= item.localised_name
 				newStrings = true
 				if not newLocale[name] then
@@ -31,6 +31,6 @@ function printMissingRecipeLocalization()
 			out=out.."})"
 			game.write_file("hardCrafting-recipeWhitelist.txt",out)
 		end
-		global.hardCrafting.localizationNotice = true
+		storage.hardCrafting.localizationNotice = true
 	end
 end

@@ -8,10 +8,10 @@ bit = require "libs.bit.numberlua"
  
 prototypesForGroup = function(type)
 	if type == "item" then
-		return game.item_prototypes
+		return prototypes.item
 	elseif type == "fluid" then
-		return game.fluid_prototypes
+		return prototypes.fluid
 	elseif type == "signal" then
-		return game.virtual_signal_prototypes
+		return prototypes.virtual_signal
 	end
 end
