@@ -7,7 +7,7 @@ if settings.startup["hardcrafting-complex-crafting-byproduct"].value == true the
 		"logistic-chest-active-provider", "logistic-chest-passive-provider", "logistic-chest-requester", "logistic-chest-storage", "logistic-chest-buffer",
 		"big-electric-pole", "substation", "train-stop", "locomotive", "tank",
 		"solar-panel", "accumulator",
-		"pumpjack", "electric-furnace", "electric-incinerator", "pulverizer", "assembling-machine-2",
+		"electric-furnace", "electric-incinerator", "pulverizer", "assembling-machine-2",
 		"assembling-machine-3", "oil-refinery", "chemical-plant", "lab", "beacon", "centrifuge",
 		"nuclear-reactor", "heat-exchanger", "heat-pipe",
 		"gun-turret", "laser-turret", "radar", "rocket-silo"
@@ -24,8 +24,16 @@ if settings.startup["hardcrafting-complex-crafting-byproduct"].value == true the
 			if item and item.place_result then
 				table.insert(recipe.results, { type="item", name="scrap-metal",amount=1})
 				if not recipe.icon then
-					recipe.icon = item.icon
-    				recipe.icon_size = item.icon_size
+					-- Factorio 2.1 can define an item's icon using `icons` rather
+					-- than the legacy single `icon` field. Once a second result is
+					-- added, the recipe must have an explicit icon.
+					if item.icon then
+						recipe.icon = item.icon
+						recipe.icon_size = item.icon_size
+					elseif item.icons and item.icons[1] then
+						recipe.icons = deepcopy(item.icons)
+						recipe.icon_size = item.icon_size
+					end
 				end
 				if not recipe.subgroup then
 					recipe.subgroup = item.subgroup
