@@ -1,18 +1,14 @@
 ---------------------------------------------------------------------------------------------------
-Version: 1.0.13
-Date: 2026-08-08
+Version: 1.0.12
+Date: 2026-08-09
   Changes:
     - Upgrade to factorio 2.1
----------------------------------------------------------------------------------------------------
-Version: 1.0.12
-Date: 2026-08-08
-  Changes:
-    - Support for deadlock-stacking
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.11
 Date: 2024-02-29
   Changes:
     - hardcrafting-smaller-ore-stacks-setting improved: Change stacksize of all actual ores and also related material
+    - Support for deadlock-stacking
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.10
 Date: 2023-12-09
