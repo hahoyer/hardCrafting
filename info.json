@@ -5,7 +5,6 @@
 	"author": "judos, 2.1 port by ixu",
 	"description": "Modifies vanilla crafting and smelting to be much trickier, you will need better planning and more clever setup",
 	"dependencies": [
-		"base >= 2.1",
 		"? railloader",
 		"? railloader-MXO",
 		"? deadlock-beltboxes-loaders"
