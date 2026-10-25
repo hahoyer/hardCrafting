@@ -23,7 +23,7 @@ fuelValueCoalDust = round(fuelValueCoalDust,1)
 local coalDust = data.raw.item["coal-dust"]
 overwriteContent(coalDust,{
 	fuel_value = tostring(fuelValueCoalDust).."MJ",
-	fuel_category = "chemical",
+	fuel_categories = {"chemical"},
 	fuel_acceleration_multiplier = 1.2,
 	fuel_top_speed_multiplier = 1.05
 })
